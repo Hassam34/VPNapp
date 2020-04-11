@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, Image, Modal, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, Image, Modal, TouchableOpacity, ImageBackground } from 'react-native';
 import { CardSection, Header, Button, Spinner } from './common';
 import { icons } from '../../constants/Image';
 import { Servers } from '../../constants/Server';
 import { Fonts } from '../utilts/Fonts';
+import { Overlay } from 'react-native-elements'
+import Icon from 'react-native-vector-icons/EvilIcons'
+
 
 class VPN extends Component {
     state = {
@@ -21,31 +24,46 @@ class VPN extends Component {
         const connection = server || automatic
         return (
             <View style={styles.viewStyle}>
-
                 <Image source={connection.icon} style={{ marginRight: 10 }} />
                 <Text style={styles.textStyle}>{connection.name}</Text>
                 <Image source={icons.dropdown} style={{ marginLeft: 10 }} />
-
-
             </View>
         )
     }
 
-    handleServer(){
-            this.setState({connect:false, show:true})
+    handleServer() {
+        this.setState({ connect: false, show: true })
     }
 
     renderAllServers() {
         const { show, server, automatic } = this.state
         const connection = server || automatic
         return (
-            <Modal style={{backgroundColor:'red',justifyContent:'flex-end',marginTop:10,}} visible={show} transparent animationType='fade'>
-                <View>
-                    <View style={{backgroundColor:'white',alignSelf:'center'}}>
-                        <Text style={{fontSize:20, fontFamily:Fonts.BurlingameProSemiBold}}>Pick Your Server</Text>
+            <Overlay transparent={true}
+                visible={this.state.show}
+                width="auto"
+                height="auto"
+                onBackdropPress={() => {
+                    this.setState({ show: false })
+                }}
+            >
+                <View style={{
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+
+                }}>
+                    <View style={{
+                        backgroundColor: "white",
+                        width: 300,
+                        height: 185,
+                        padding: 20
+                    }}>
+                        <Text>Hello from VPN!</Text>
                     </View>
                 </View>
-            </Modal>
+            </Overlay>
+
         )
     }
 
@@ -86,10 +104,10 @@ class VPN extends Component {
                         </View>
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity onPress={()=> (this.setState({show:true}) )    }>
+                <TouchableOpacity onPress={() => (this.setState({ show: true }))}>
                     {this.renderServer()}
                 </TouchableOpacity>
-                        {/* {this.renderAllServers()} */}
+                {this.renderAllServers()}
             </View>
         );
     }

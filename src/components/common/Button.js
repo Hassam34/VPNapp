@@ -19,7 +19,7 @@ const styles={
         fontWeight:'bold'
     },
     buttonStyle:{
-        flex:1,
+       // flex:1,
         alignSelf:'stretch',
         borderColor:'#007aff',
         backgroundColor:'BCFAA92',
